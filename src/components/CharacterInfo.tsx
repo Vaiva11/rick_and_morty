@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import { Character } from "../utils/types";
 import { device } from "../theme/Device";
 import { ButtonLink } from "../components/ButtonLink";
+import { CharacterCountContext } from "../utils/context/charactersCountContext";
 
 const Info = styled.div`
   display: flex;
@@ -39,7 +41,11 @@ type CharacterInfoProps = {
 };
 
 export const CharacterInfo = ({ item, id }: CharacterInfoProps) => {
+  const { characterCount } = useContext(CharacterCountContext);
+
   const isIdFirst = () => id === 1;
+  const isIdLast = () => id === characterCount;
+
   return (
     <Info>
       <img src={item.image} alt={item.name} />
@@ -68,7 +74,9 @@ export const CharacterInfo = ({ item, id }: CharacterInfoProps) => {
         {!isIdFirst() && (
           <ButtonLink to={`/character/${Number(id) - 1}`} text="<" />
         )}
-        <ButtonLink to={`/character/${Number(id) + 1}`} text=">" />
+        {!isIdLast() && (
+          <ButtonLink to={`/character/${Number(id) + 1}`} text=">" />
+        )}
       </ButtonsWrapper>
     </Info>
   );

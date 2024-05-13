@@ -49,5 +49,3 @@ export const Character = () => {
     </Wrapper>
   );
 };
-
-// find if id is last
