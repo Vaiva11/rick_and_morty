@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import useFetchItems from "../utils/hooks/useFetchItems";
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.lightGray};
@@ -6,5 +7,14 @@ const Wrapper = styled.div`
 `;
 
 export const Home = () => {
-  return <Wrapper>Home</Wrapper>;
+  const fetchedItemsData = useFetchItems();
+  console.log(fetchedItemsData);
+
+  return (
+    <Wrapper>
+      {fetchedItemsData?.results.map((item) => (
+        <div>{item.name}</div>
+      ))}
+    </Wrapper>
+  );
 };
