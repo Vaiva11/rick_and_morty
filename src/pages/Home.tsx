@@ -54,7 +54,6 @@ export const Home = () => {
   const { items, loading } = useFetchItems(currentPage);
   const PageNumber = items?.info.pages;
 
-  // update
   const generatePageNumbers = (totalPages: number) =>
     Array.from({ length: totalPages }, (_, index) => index + 1);
 

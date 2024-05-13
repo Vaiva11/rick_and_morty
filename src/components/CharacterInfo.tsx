@@ -26,10 +26,11 @@ const Info = styled.div`
   }
 `;
 
-const ButtonsWrapper = styled.div`
+const ButtonsWrapper = styled.div<{ isIdFirst: boolean }>`
   display: flex;
-  justify-content: space-between;
   margin-top: ${({ theme }) => `${theme.spacings.md}`};
+  justify-content: ${({ isIdFirst }) =>
+    isIdFirst ? "flex-end" : "space-between"};
 `;
 
 type CharacterInfoProps = {
@@ -63,7 +64,7 @@ export const CharacterInfo = ({ item, id }: CharacterInfoProps) => {
       <div>
         <b>Number of episodes appearance:</b> {item.episode.length}
       </div>
-      <ButtonsWrapper>
+      <ButtonsWrapper isIdFirst={isIdFirst()}>
         {!isIdFirst() && (
           <ButtonLink to={`/character/${Number(id) - 1}`} text="<" />
         )}

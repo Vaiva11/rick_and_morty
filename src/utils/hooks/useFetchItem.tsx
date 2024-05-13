@@ -8,18 +8,17 @@ const useFetchItem = (id: number) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${API_URL}/${id}`);
+    axios
+      .get(`${API_URL}/${id}`)
+      .then((response) => {
         setItems(response.data);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error("Error fetching items:", error);
-      } finally {
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-    fetchItems();
+      });
   }, [id]);
   return { items, loading };
 };

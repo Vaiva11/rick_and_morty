@@ -8,19 +8,19 @@ const useFetchItems = (pageNumber: number) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${API_URL}?page=${pageNumber}`);
+    axios
+      .get(`${API_URL}?page=${pageNumber}`)
+      .then((response) => {
         setItems(response.data);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error("Error fetching items:", error);
-      } finally {
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-    fetchItems();
+      });
   }, [pageNumber]);
+
   return { items, loading };
 };
 
