@@ -21,7 +21,7 @@ const InfoWrapper = styled.div`
 
 export const Character = () => {
   const { id } = useParams();
-  const fetchedItemData = useFetchItem(Number(id));
+  const { items, loading } = useFetchItem(Number(id));
 
   const isIdFirst = () => Number(id) === 1;
 
@@ -29,11 +29,14 @@ export const Character = () => {
     <Wrapper>
       <ButtonLink to="/home" text="Back Home" variant="light" p={2} />
       <InfoWrapper>
-        {!isIdFirst() && (
+        {!isIdFirst() && !loading && (
           <ButtonLink to={`/character/${Number(id) - 1}`} text="<" m={2} />
         )}
-        {fetchedItemData && <CharacterInfo item={fetchedItemData} />}
-        <ButtonLink to={`/character/${Number(id) + 1}`} text=">" m={2} />
+        {items && <CharacterInfo item={items} />}
+        {loading && <div>Loading...</div>}
+        {!loading && (
+          <ButtonLink to={`/character/${Number(id) + 1}`} text=">" m={2} />
+        )}
       </InfoWrapper>
     </Wrapper>
   );

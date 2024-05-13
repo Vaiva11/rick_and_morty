@@ -25,8 +25,8 @@ const PaginationNumber = styled.div`
 
 export const Home = () => {
   const [page, setPage] = useState(1);
-  const fetchedItemsData = useFetchItems(page);
-  const PageNumber = fetchedItemsData?.info.pages;
+  const { items, loading } = useFetchItems(page);
+  const PageNumber = items?.info.pages;
 
   const generatePageNumbers = (totalPages: number) =>
     Array.from({ length: totalPages }, (_, index) => index + 1);
@@ -35,7 +35,8 @@ export const Home = () => {
 
   return (
     <PageWrapper>
-      {fetchedItemsData && <CharacterCard items={fetchedItemsData} />}
+      {loading && <div>Loading...</div>}
+      {!loading && items && <CharacterCard items={items} />}
       <PaginationWrapper>
         {Pages.map((item) => (
           <PaginationNumber key={item} onClick={() => setPage(item)}>
