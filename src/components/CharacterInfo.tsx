@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Character } from "../utils/types";
 import { device } from "../theme/Device";
 import { ButtonLink } from "../components/ButtonLink";
-import { CharacterCountContext } from "../utils/context/charactersCountContext";
+import { Context } from "../utils/context/Context";
 
 const Info = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ type CharacterInfoProps = {
 };
 
 export const CharacterInfo = ({ item, id }: CharacterInfoProps) => {
-  const { characterCount } = useContext(CharacterCountContext);
+  const { characterCount } = useContext(Context);
 
   const isIdFirst = () => id === 1;
   const isIdLast = () => id === characterCount;

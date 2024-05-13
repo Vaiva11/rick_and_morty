@@ -2,12 +2,12 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ResponseType } from "../types";
 import { API_URL } from "../routes";
-import { CharacterCountContext } from "../context/charactersCountContext";
+import { Context } from "../context/Context";
 
 const useFetchItems = (pageNumber: number) => {
   const [items, setItems] = useState<ResponseType>();
   const [loading, setLoading] = useState<boolean>(true);
-  const { setCharacterCount } = useContext(CharacterCountContext);
+  const { setCharacterCount, setCurrentPage } = useContext(Context);
 
   useEffect(() => {
     axios
@@ -15,6 +15,7 @@ const useFetchItems = (pageNumber: number) => {
       .then((response) => {
         setItems(response.data);
         setCharacterCount(response.data.info.count);
+        setCurrentPage(pageNumber);
       })
       .catch((error) => {
         console.error("Error fetching items:", error);

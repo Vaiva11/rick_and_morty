@@ -1,14 +1,14 @@
 import { Router } from "./Router";
 import { ThemeProvider } from "styled-components";
 import { Theme } from "./theme/Theme";
-import { CharacterCountProvider } from "./utils/context/charactersCountContext";
+import { Provider } from "./utils/context/Context";
 
 export default function App() {
   return (
     <ThemeProvider theme={Theme}>
-      <CharacterCountProvider>
+      <Provider>
         <Router />
-      </CharacterCountProvider>
+      </Provider>
     </ThemeProvider>
   );
 }
