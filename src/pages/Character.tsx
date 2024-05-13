@@ -3,10 +3,16 @@ import { useParams } from "react-router-dom";
 import useFetchItem from "../utils/hooks/useFetchItem";
 import { ButtonLink } from "../components/ButtonLink";
 import { CharacterInfo } from "../components/CharacterInfo";
+import { device } from "../theme/Device";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.lightGray};
   min-height: 100vh;
+  padding: 0 ${({ theme }) => `${theme.spacings.xl}`};
+
+  @media ${device.mobile} {
+    padding: 0 ${({ theme }) => `${theme.spacings.md}`};
+  }
 `;
 
 const InfoWrapper = styled.div`
@@ -17,26 +23,28 @@ const InfoWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+
+  @media ${device.mobile} {
+    margin: ${({ theme }) => `${theme.spacings.md}`} 0;
+  }
 `;
 
 export const Character = () => {
   const { id } = useParams();
   const { items, loading } = useFetchItem(Number(id));
 
-  const isIdFirst = () => Number(id) === 1;
-
   return (
     <Wrapper>
-      <ButtonLink to="/home" text="Back Home" variant="light" p={2} />
+      <ButtonLink
+        to="/home/1"
+        text="Back Home"
+        variant="light"
+        pt={[4, 4]}
+        pb={[2, 0]}
+      />
       <InfoWrapper>
-        {!isIdFirst() && !loading && (
-          <ButtonLink to={`/character/${Number(id) - 1}`} text="<" m={2} />
-        )}
-        {items && <CharacterInfo item={items} />}
         {loading && <div>Loading...</div>}
-        {!loading && (
-          <ButtonLink to={`/character/${Number(id) + 1}`} text=">" m={2} />
-        )}
+        {!loading && items && <CharacterInfo item={items} id={Number(id)} />}
       </InfoWrapper>
     </Wrapper>
   );

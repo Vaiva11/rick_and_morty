@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ResponseType } from "../utils/types";
+import { device } from "../theme/Device";
 
 const CardsWrapper = styled.div`
   display: flex;
@@ -14,12 +15,17 @@ const Card = styled.div`
   border-radius: ${({ theme }) => `${theme.spacings.sm}`};
   padding: ${({ theme }) => `${theme.spacings.md}`};
   margin: ${({ theme }) => `${theme.spacings.md}`};
+  max-width: min-content;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
 
   img {
     max-width: 200px;
     border-radius: ${({ theme }) => `${theme.spacings.sm}`};
+
+    @media ${device.mobile} {
+      max-width: 100%;
+    }
   }
 
   &:hover {
