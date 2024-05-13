@@ -43,7 +43,7 @@ export const Home = () => {
     <Wrapper>
       {fetchedItemsData?.results.map(({ id, image, name }) => (
         <Card key={id} onClick={() => navigate(`/character/${id}`)}>
-          <img src={image} alt="Logo" />
+          <img src={image} alt={name} />
           <Text>{name}</Text>
         </Card>
       ))}
