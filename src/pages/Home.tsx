@@ -1,10 +1,17 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetchItems from "../utils/hooks/useFetchItems";
 
-const Wrapper = styled.div`
+const PageWrapper = styled.div`
   padding: ${({ theme }) => `${theme.spacings.xl}`};
   background-color: ${({ theme }) => theme.colors.lightGray};
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
+
+const CardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -35,18 +42,46 @@ const Text = styled.div`
   margin-top: ${({ theme }) => `${theme.spacings.sm}`};
 `;
 
+const PaginationWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: ${({ theme }) => `${theme.spacings.xl}`};
+`;
+
+const PaginationNumber = styled.div`
+  margin: ${({ theme }) => `${theme.spacings.xs}`};
+  cursor: pointer;
+`;
+
 export const Home = () => {
   const navigate = useNavigate();
-  const fetchedItemsData = useFetchItems();
+  const [page, setPage] = useState(1);
+  const fetchedItemsData = useFetchItems(page);
+  const PageNumber = fetchedItemsData?.info.pages;
+
+  const generatePageNumbers = (totalPages: number) =>
+    Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  const Pages = generatePageNumbers(Number(PageNumber));
 
   return (
-    <Wrapper>
-      {fetchedItemsData?.results.map(({ id, image, name }) => (
-        <Card key={id} onClick={() => navigate(`/character/${id}`)}>
-          <img src={image} alt={name} />
-          <Text>{name}</Text>
-        </Card>
-      ))}
-    </Wrapper>
+    <PageWrapper>
+      <CardsWrapper>
+        {fetchedItemsData?.results.map(({ id, image, name }) => (
+          <Card key={id} onClick={() => navigate(`/character/${id}`)}>
+            <img src={image} alt={name} />
+            <Text>{name}</Text>
+          </Card>
+        ))}
+      </CardsWrapper>
+      <PaginationWrapper>
+        {Pages.map((item) => (
+          <PaginationNumber key={item} onClick={() => setPage(item)}>
+            {item}
+          </PaginationNumber>
+        ))}
+      </PaginationWrapper>
+    </PageWrapper>
   );
 };
