@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useFetchItem from "../utils/hooks/useFetchItem";
 import { ButtonLink } from "../components/ButtonLink";
+import { CharacterInfo } from "../components/CharacterInfo";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.lightGray};
@@ -18,16 +19,6 @@ const InfoWrapper = styled.div`
   width: 100%;
 `;
 
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: ${({ theme }) => `${theme.spacings.xl}`};
-  box-shadow: 0px 0px 30px 0px ${({ theme }) => theme.colors.mainBlue};
-  border-radius: ${({ theme }) => `${theme.spacings.sm}`};
-  background-color: ${({ theme }) => theme.colors.white};
-  max-width: 300px;
-`;
-
 export const Character = () => {
   const { id } = useParams();
   const fetchedItemData = useFetchItem(Number(id));
@@ -36,26 +27,13 @@ export const Character = () => {
 
   return (
     <Wrapper>
-      <ButtonLink to="/home" text="Back" variant="light" />
+      <ButtonLink to="/home" text="Back Home" variant="light" p={2} />
       <InfoWrapper>
         {!isIdFirst() && (
-          <ButtonLink to={`/character/${Number(id) - 1}`} text="<" />
+          <ButtonLink to={`/character/${Number(id) - 1}`} text="<" m={2} />
         )}
-        {fetchedItemData && (
-          <Info>
-            <img src={fetchedItemData.image} alt={fetchedItemData.name} />
-            <div>Name: {fetchedItemData.name}</div>
-            <div>Status: {fetchedItemData.status}</div>
-            <div>Species: {fetchedItemData.species}</div>
-            <div>Gender: {fetchedItemData.gender}</div>
-            <div>Origin: {fetchedItemData.origin.name}</div>
-            <div>Last known location: {fetchedItemData.location.name}</div>
-            <div>
-              Number of episodes appearance: {fetchedItemData.episode.length}
-            </div>
-          </Info>
-        )}
-        <ButtonLink to={`/character/${Number(id) + 1}`} text=">" />
+        {fetchedItemData && <CharacterInfo item={fetchedItemData} />}
+        <ButtonLink to={`/character/${Number(id) + 1}`} text=">" m={2} />
       </InfoWrapper>
     </Wrapper>
   );

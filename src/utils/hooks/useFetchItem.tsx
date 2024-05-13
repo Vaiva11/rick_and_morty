@@ -9,7 +9,7 @@ const useFetchItem = (id: number) => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get(`${API_URL}/${id}`, {});
+        const response = await axios.get(`${API_URL}/${id}`);
         setItems(response.data);
       } catch (error) {
         console.error("Error fetching items:", error);
