@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useFetchItems from "../utils/hooks/useFetchItems";
 import { CharacterCard } from "../components/CharacterCard";
 import { device } from "../theme/Device";
+import { generatePageNumbers } from "../utils/generatePageNumbers";
 
 const H1 = styled.h1`
   text-align: center;
@@ -53,10 +54,6 @@ export const Home = () => {
   const [currentPage, setCurrentPage] = useState(Number(page));
   const { items, loading } = useFetchItems(currentPage);
   const PageNumber = items?.info.pages;
-
-  const generatePageNumbers = (totalPages: number) =>
-    Array.from({ length: totalPages }, (_, index) => index + 1);
-
   const Pages = generatePageNumbers(Number(PageNumber));
 
   return (
